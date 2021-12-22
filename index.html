@@ -1,0 +1,319 @@
+<html style="overflow:hidden;">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="referrer" content="no-referrer"/>
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+  <link rel="stylesheet" href="./css/bootstrap-theme.min.css">
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="./js/jquery.min.js" ></script>
+  <script src="./js/bootstrap.min.js"></script>
+  <script src="crypto-js/crypto-js.js"></script>
+  <!-- <script src="jquery.cookie.js"></script> -->
+  <style>
+    .datav-tab-items{
+      bottom:0px;
+      position: absolute;
+    }
+    .datav-tab-items li, .datav-tab-items li.active{
+      width: 140px;
+      height: 48px;
+      text-align: center;
+      /* background: url(http://datav.oss-cn-hangzhou.aliyuncs.com/uploads/images/eb03c2fc39fb4f6a3f4cd9e512fe79ce.png) 0 0 no-repeat; */
+      /* transform: scale(0, 0); */
+      transform-origin: left top 0px;
+      text-indent: 0px;
+      border: none;
+      position: relative;
+      margin-right: 30px;
+      background-color: transparent;
+    }
+    .datav-tab-items li .normal{
+      display: inline-block;
+    }
+    .datav-tab-items li .hover{
+      display: none;
+    }
+    .datav-tab-items li:hover .normal, .datav-tab-items li.active .normal{
+      display: none;
+    }
+    .datav-tab-items li:hover .hover, .datav-tab-items li.active .hover{
+      display: inline-block;
+    }
+    .datav-tab-items li:hover p{
+      color: #00FFF6;
+    }
+    /* 显示3个 */
+    /* .datav-tab-items li.active{
+      display: none;
+    } */
+    .datav-tab-items li .tab-icon{
+      margin-top: 9px;
+    }
+    .datav-tab-items li .text-container{
+      position: relative;
+      width: 104px;
+      float: right;
+    }
+    .datav-tab-items li p{
+      position: absolute;
+      top: 7px;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      color: RGBA(255,255,255,0.62);
+      font-size: 24px;
+      text-indent: 0px;
+    }
+    form {background: #0f2a41; width: 100% ; height: 100%; margin: 0px;}
+    form p {color: white;font-size: 18px;margin-top:0px;margin-bottom: 20px;}
+    form img {margin-top: 200px;margin-bottom: 40px;}
+    form .bock{width: 0px;height:0px;opacity: 0;}
+    form input.form-control{height:34px;padding:6px 12px;font-size:14px;line-height:1.42857143;color:#555;background-color:#fff;background-image:none;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075);-webkit-transition:border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;-o-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;width:200px;display:inline-block;margin-right:5px}
+    form .btn{display:inline-block;padding:6px 12px;margin-bottom:0;font-size:14px;font-weight:400;line-height:1.42857143;text-align:center;white-space:nowrap;vertical-align:middle;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background-image:none;border:1px solid #0000;border-radius:4px}
+    form .btn-primary{color:#fff;background-color:#428bca;border-color:#357ebd}
+    form .alert-danger{color:#a94442;background-color:#f2dede;border-color:#ebccd1}
+    form .alert{padding:15px;margin-bottom:20px;border:0px solid #0000;border-radius:4px;width:270px;display:inline-block}
+    form #share-password img{margin-top:0}
+    form #share-password{position:absolute;top:50%;margin-top:-110px;left:50%;margin-left:-130px}
+
+  </style>
+  <title>
+    珠海公交大屏
+  </title>
+</head>
+<body>
+<form id="All">
+  <div id="share-password" style="text-align:center" >
+    <img width="100" alt="logo" src="http://img.alicdn.com/tfs/TB1TyZBgILJ8KJjy0FnXXcFDpXa-300-300.gif">
+    <p>已打开密码保护，请输入密码</p>
+    <div>
+      <div class="bock" >密码错误</div>
+    </div>
+    <input  id="txt" type="password" class="form-control">
+    <a id="btn" onclick="passwd()" class="btn btn-primary">确定</a>
+  </div>
+</form>
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-keyboard="false" data-interval="false">
+  <!-- Indicators -->
+  <ol class="carousel-indicators datav-tab-items">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active" id="s1">
+      <img class="tab-icon" src="./imgs/huaban.png" width="32px" height="32px" />
+      <div class="text-container">
+        <img class="normal" width="104px" height="48px" src="http://datav.oss-cn-hangzhou.aliyuncs.com/uploads/images/eb03c2fc39fb4f6a3f4cd9e512fe79ce.png" />
+        <img class="hover" width="104px" height="48px" src="http://datav.oss-cn-hangzhou.aliyuncs.com/uploads/images/8593753821d55bbfc88ee4dc57385bf1.png" />
+        <p>总览</p>
+      </div>
+    </li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"  id="s2">
+      <img class="tab-icon" src="./imgs/huaban.png" width="32px" height="32px"/>
+      <div class="text-container">
+        <img class="normal" width="104px" height="48px" src="http://datav.oss-cn-hangzhou.aliyuncs.com/uploads/images/eb03c2fc39fb4f6a3f4cd9e512fe79ce.png" />
+        <img class="hover" width="104px" height="48px" src="http://datav.oss-cn-hangzhou.aliyuncs.com/uploads/images/8593753821d55bbfc88ee4dc57385bf1.png" />
+        <p>客流</p>
+      </div>
+    </li>
+    <li data-target="#carousel-example-generic" data-slide-to="2" id="s3">
+      <img class="tab-icon" src="./imgs/huaban.png" width="32px" height="32px"/>
+      <div class="text-container">
+        <img class="normal" width="104px" height="48px" src="http://datav.oss-cn-hangzhou.aliyuncs.com/uploads/images/eb03c2fc39fb4f6a3f4cd9e512fe79ce.png" />
+        <img class="hover" width="104px" height="48px" src="http://datav.oss-cn-hangzhou.aliyuncs.com/uploads/images/8593753821d55bbfc88ee4dc57385bf1.png" />
+        <p>线路</p>
+      </div>
+    </li>
+    <li data-target="#carousel-example-generic" data-slide-to="3" id="s4">
+      <img class="tab-icon" src="./imgs/huaban.png" width="32px" height="32px"/>
+      <div class="text-container">
+        <img class="normal" width="104px" height="48px" src="http://datav.oss-cn-hangzhou.aliyuncs.com/uploads/images/eb03c2fc39fb4f6a3f4cd9e512fe79ce.png" />
+        <img class="hover" width="104px" height="48px" src="http://datav.oss-cn-hangzhou.aliyuncs.com/uploads/images/8593753821d55bbfc88ee4dc57385bf1.png" />
+        <p>车辆</p>
+      </div>
+    </li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox" style="background-color: RGBA(31,32,38,1);">
+    <div class="item active">
+
+      <!-- <iframe style="border: none;" width="100%" height="100%" src="http://datav.aliyuncs.com/share/2c5059dbe12cd80c69ea1a8e627b8678?tab=总览"></iframe> -->
+      <iframe id="iframe1" style="border: none;" width="100%" height="100%" base_index="0" base_url="http://datav.aliyuncs.com/share/87fcf4f3d9114e4fcc13212ab133f988?tab=总览" src="#"></iframe>
+    </div>
+
+  </div>
+</div>
+<script>
+  function set(key ,value){
+    let curTime = new Date().getTime();
+    localStorage.setItem(key,JSON.stringify({data:value,time:curTime}));
+  }
+  function get(key, exp){
+    var data = localStorage.getItem(key);
+    if(data){
+      var dataObj = JSON.parse(data);
+      if (new Date().getTime() - dataObj.time > exp) {
+      }else{
+        var dataObjDatatoJson = JSON.parse(dataObj.data)
+        return dataObjDatatoJson;
+      }
+    }
+
+  }
+  const screenArr = [
+  {//http://datav.aliyuncs.com/share/87fcf4f3d9114e4fcc13212ab133f988
+  // https://datav.aliyuncs.com/share/750445985c3c52ead6b3ddf978b98344
+      "name": "总览",
+      "token": "TqAAerqw5C1qfaawywzCy7X5A00x4axk",
+      // "screenID": "750445985c3c52ead6b3ddf978b98344",
+      "screenID": "9fc1d9971964f48b5a5dc5e124c965b1",//新修改地址
+      "id": "iframe1"
+    },
+    {//http://datav.aliyuncs.com/share/2a89b9305b942efe7dc3935935ddbf35
+    // https://datav.aliyuncs.com/share/a87ed5a6d73308e8f355c229b1abb2d3
+      "name": "客流",
+      "token": "PJLor4LV-cuw_AVdZLMjZcuR_8uW1Lej",
+      // "screenID": "a87ed5a6d73308e8f355c229b1abb2d3",
+      "screenID": "386b7aeb3e4bf36d9025d91387b86113",//新修改地址
+      "id": "iframe2"
+    },
+    { // https://datav.aliyuncs.com/share/0d285a91fde6923d1a341c955d8affd9
+      "name": "线路",
+      "token": "YgOAXReJSlavcmjqlfUMKhcVsHLfadC1",
+      // "screenID": "0d285a91fde6923d1a341c955d8affd9",
+      "screenID": "ce3db10128832304c465605896dfc01e",//新修改地址
+      "id": "iframe3"
+    },
+    {//http://datav.aliyuncs.com/share/5a9cbc4cf29c4bf7531c16d87136b333
+    // https://datav.aliyuncs.com/share/52bf847b857a57c77a9d31ca9413242c
+      "name": "车辆",
+      "token": "OhMSUTrO77sZ7qkq5oPVAhkctsKhnl2o",
+      // "screenID": "52bf847b857a57c77a9d31ca9413242c",
+      "screenID": "5aecc44d9e67534ff5d0b66b1e63a77f",//新修改地址
+      "id": "iframe4"
+    }
+  ]
+  // $.cookie('zhuhai_123', "123", { expires: 3600 })
+
+  function passwd(){
+    var pwd = $("#txt").val();
+    var te = $(".bock");
+    te.html("");
+    if(pwd === "liaocheng123"){
+      $("#All").hide();
+      // $.cookie('zhuhai_pass', "1", { expires: 3600 })
+      set('zhuhai_pass', true)
+      return true;
+    }else{
+      te.html("密码错误").removeClass().addClass("alert alert-danger");
+      $("#txt").val("");
+      return false;
+    }
+    return true
+  }
+  $(document).ready(()=>{
+    // function passwd() {
+    //   $("#txt").blur(passwd);
+    //   $("#btn").click(function(){
+    //     var flag = true;
+    //     $(":input[id=txt]").each(function(){
+    //       if(!passwd($(this))){
+    //         flag = false;
+    //       }
+    //     });
+    //     return flag;
+    //   });
+    // }
+    // if($.cookie('zhuhai_pass')){
+    if(get('zhuhai_pass', 86400000)){
+      $("#All").hide();
+    } else {
+      $("#All").show();
+      $("#btn").on('click', (e)=>{
+        passwd()
+      })
+    }
+
+    // $('#carousel-example-generic').on('slide.bs.carousel', function (e) {
+    //   // do something…
+    //   console.log('13123123123123', e, $(e.relatedTarget).children().attr('base_url'), $(e.relatedTarget).children().attr('base_index'))
+    //   // setUrl(screenArr, +$(e.relatedTarget).children().attr('base_index'))
+    // })
+
+  });
+  for(let i=0;i<4;i++){
+      $("#s"+(i+1)).on('click',function(){
+        const baseUrl = "http://datav.aliyuncs.com/share/";
+        const crypto = CryptoJS;
+        let item = screenArr[i]
+        var token = item.token;
+        var screenID = item.screenID;
+        var time = Date.now();
+        // console.log('time', time)
+        var stringToSign = screenID +'|'+ time;
+        // var signature = crypto.createHmac('sha256', token).update(stringToSign).digest().toString('base64');
+
+        var signature = crypto.HmacSHA256(stringToSign, token).toString(crypto.enc.Base64)
+
+        var url = baseUrl + screenID + "?tab=" + item.name + "&_datav_time=" + time + "&_datav_signature=" + encodeURIComponent(signature);
+        // var url = baseUrl + screenID + "?_datav_time=" + time + "&_datav_signature=" + encodeURIComponent(signature);
+        console.log(url)
+
+        $("#iframe1").attr({'src': url})
+        $("#s1,#s2,#s3,#s4").removeClass('active');
+        $(this).addClass('active');
+      })
+  }
+
+  function setUrl(_screenArr, i) {
+    const baseUrl = "http://datav.aliyuncs.com/share/"
+    const crypto = CryptoJS;
+    // [_screenArr[i]].forEach(item => {
+    for (let i = 0; i < _screenArr.length; i++) {
+      setTimeout(function() {
+        let item = _screenArr[i]
+        var token = item.token;
+        var screenID = item.screenID;
+        var time = Date.now();
+        // console.log('time', time)
+        var stringToSign = screenID +'|'+ time;
+        // var signature = crypto.createHmac('sha256', token).update(stringToSign).digest().toString('base64');
+
+        var signature = crypto.HmacSHA256(stringToSign, token).toString(crypto.enc.Base64)
+
+        var url = baseUrl + screenID + "?tab=" + item.name + "&_datav_time=" + time + "&_datav_signature=" + encodeURIComponent(signature);
+        // var url = baseUrl + screenID + "?_datav_time=" + time + "&_datav_signature=" + encodeURIComponent(signature);
+
+        $("#" + item.id).attr({'src': url})
+
+      }, 2000 * i);
+    }
+    // _screenArr.forEach(item => {
+    //   var token = item.token;
+    //   var screenID = item.screenID;
+    //   var time = Date.now();
+    //   // console.log('time', time)
+    //   var stringToSign = screenID +'|'+ time;
+    //   // var signature = crypto.createHmac('sha256', token).update(stringToSign).digest().toString('base64');
+
+    //   var signature = crypto.HmacSHA256(stringToSign, token).toString(crypto.enc.Base64)
+
+    //   var url = baseUrl + screenID + "?tab=" + item.name + "&_datav_time=" + time + "&_datav_signature=" + encodeURIComponent(signature);
+    //   // var url = baseUrl + screenID + "?_datav_time=" + time + "&_datav_signature=" + encodeURIComponent(signature);
+
+    //   $("#" + item.id).attr({'src': url})
+    // });
+  }
+
+  $(window).resize(function() {
+    var _widthScale = document.body.clientWidth / 1920
+    var _heightScale = document.body.clientHeight / 1080
+    // $('.datav-tab-items li').css('transform','scale('+_widthScale+', '+_heightScale+')');
+    $('.datav-tab-items').css('transform','scale('+_widthScale+', '+_heightScale+')');
+    $('.datav-tab-items li').css('transform','scale('+_widthScale+', '+_heightScale+')');
+  });
+
+  setUrl(screenArr, 0)
+
+</script>
+</body>
+</html>
